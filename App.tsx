@@ -1,5 +1,6 @@
 import { StatusBar } from 'react-native'
 import { ThemeProvider } from 'styled-components/native'
+
 // import {
 //   useFonts,
 //   NunitoSans_400Regular,
@@ -7,12 +8,7 @@ import { ThemeProvider } from 'styled-components/native'
 // } from '@expo-google-fonts/nunito-sans'
 
 import theme from './src/theme'
-import { Routes } from 'src/routes'
-
-import { Home } from '@screens/Home'
-import { Statistics } from '@screens/Statistics'
-import { CreateMeal } from '@screens/CreateMeal'
-import { CreateMealFeedback } from '@screens/CreateMealFeedback'
+import { Routes } from './src/routes'
 
 export default function App() {
   // const [fontIsLoaded] = useFonts({ NunitoSans_400Regular, NunitoSans_700Bold })
@@ -24,7 +20,7 @@ export default function App() {
         backgroundColor='transparent'
         translucent
       />
-      <CreateMealFeedback />
+      <Routes />
       {/* {fontIsLoaded ? <Routes /> : <Loading />} */}
     </ThemeProvider>
   )

@@ -1,7 +1,7 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled, { css } from 'styled-components/native'
 
-export const Container = styled(SafeAreaView)`
+export const Container = styled.View`
   flex: 1;
   flex-direction: row;
 
@@ -12,10 +12,7 @@ export const Container = styled(SafeAreaView)`
 `
 
 export const Logo = styled.Image`
-  width: 46px;
-  height: 55px;
-
-  background-color: white;
+  background-color: transparent;
 `
 
 export const Profile = styled.View`

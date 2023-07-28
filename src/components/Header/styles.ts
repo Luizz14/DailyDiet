@@ -1,20 +1,34 @@
 import { ArrowLeft, CaretLeft } from 'phosphor-react-native'
 import { TouchableOpacity } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import styled, { css } from 'styled-components/native'
 
-export const Container = styled.View`
-  width: 100%;
+type Props = {
+  color?: string | undefined
+}
 
+export const Container = styled.View<Props>`
+  width: 100%;
+  padding: 10px 24px;
+
+  background-color: ${({ theme, color }) =>
+    color !== undefined ? color : theme.COLORS.GRAY_500};
+`
+
+export const Content = styled(SafeAreaView)`
+  display: flex;
   flex-direction: row;
+
+  width: 100%;
+  padding-bottom: 25px;
+
   align-items: center;
   justify-content: space-between;
-  padding: 10px 24px;
 `
+
 export const Title = styled.Text`
   flex: 1;
   text-align: center;
-  font-weight: 700;
-
   ${({ theme }) => css`
     font-size: ${theme.FONT_SIZE.TITLE_S}px;
     font-weight: ${theme.FONT_FAMILY.BOLD};
@@ -22,9 +36,12 @@ export const Title = styled.Text`
   `}
 `
 
-export const BackButton = styled(TouchableOpacity).attrs(({ theme }) => ({
-  flex: 1,
-}))
+export const BackButton = styled(TouchableOpacity)`
+  flex: 1;
+  /* position: absolute; */
+
+  max-width: 40px;
+`
 
 // Vai ser um icon de voltar
 export const BackIcon = styled(ArrowLeft).attrs(({ theme }) => ({

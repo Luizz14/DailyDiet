@@ -8,17 +8,17 @@ import {
 } from './styles'
 
 type Props = {
-  type?: StatusStylesProps
+  healthy?: StatusStylesProps
   mealName: string
 }
 
-export function Meal({ type = 'GOOD', mealName }: Props) {
+export function Meal({ healthy = true, mealName }: Props) {
   return (
     <Container>
       <DateFood>20:00</DateFood>
       <Divider />
       <FoodName>{mealName}</FoodName>
-      <Status type={type} />
+      <Status healthy={healthy} />
     </Container>
   )
 }

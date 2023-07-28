@@ -10,3 +10,24 @@ export const Container = styled(SafeAreaView)`
     background-color: ${theme.COLORS.GRAY_700};
   `}
 `
+
+export const Title = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.GRAY_100};
+    font-size: ${theme.FONT_SIZE.TITLE_S}px;
+  `}
+`
+
+export const Date = styled.Text`
+  margin-top: 12px;
+
+  ${({ theme }) => css`
+    color: ${theme.COLORS.GRAY_100};
+    font-size: ${theme.FONT_SIZE.TITLE_S}px;
+    font-weight: ${theme.FONT_FAMILY.BOLD};
+  `}
+`
+
+export const Content = styled.View`
+  flex: 1;
+`

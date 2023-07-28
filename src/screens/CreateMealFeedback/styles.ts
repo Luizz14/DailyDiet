@@ -1,28 +1,33 @@
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styled, { css } from 'styled-components/native'
 
-type SubtitleProps = {
+export type FeedbackStyleProps = {
+  healthy?: boolean
   isBold?: boolean
 }
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
+  justify-content: center;
+
   padding: 24px;
   background-color: ${({ theme }) => theme.COLORS.GRAY_600};
 `
 
-export const Title = styled.Text`
+export const Title = styled.Text<FeedbackStyleProps>`
   text-align: center;
   margin-top: 35px;
 
-  ${({ theme }) => css`
+  ${({ theme, healthy }) => css`
     font-size: ${theme.FONT_SIZE.TITLE_M}px;
     font-weight: ${theme.FONT_FAMILY.BOLD};
-    color: ${theme.COLORS.GREEN_DARK};
+    color: ${healthy === true
+      ? theme.COLORS.GREEN_DARK
+      : theme.COLORS.RED_DARK};
   `}
 `
 
-export const Subtitle = styled.Text<SubtitleProps>`
+export const Subtitle = styled.Text<FeedbackStyleProps>`
   text-align: center;
   margin-top: 8px;
 

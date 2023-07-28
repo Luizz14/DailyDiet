@@ -1,6 +1,5 @@
 import { TouchableOpacityProps } from 'react-native'
 import { ButtonTypeStyleProps, Circle, Container, Title } from './styles'
-import { Label } from '@components/TextLabel'
 
 type Props = TouchableOpacityProps &
   ButtonTypeStyleProps & {

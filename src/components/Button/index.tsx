@@ -7,11 +7,18 @@ type Props = TouchableOpacityProps &
   ButtonIconProps & {
     title: string
     type?: ButtonTypeStyleProps
+    onPress?: () => void
   }
 
-export function Button({ title, type = 'PRIMARY', nameIcon, ...rest }: Props) {
+export function Button({
+  title,
+  type = 'PRIMARY',
+  onPress,
+  nameIcon,
+  ...rest
+}: Props) {
   return (
-    <Container type={type} {...rest}>
+    <Container type={type} {...rest} onPress={onPress}>
       {nameIcon !== undefined && <ButtonIcon nameIcon={nameIcon} type={type} />}
       <Title type={type}>{title}</Title>
     </Container>

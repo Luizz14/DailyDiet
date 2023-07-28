@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components/native'
 
-export type StatusStylesProps = 'GOOD' | 'BAD'
+export type StatusStylesProps = boolean
 
 type Props = {
-  type: StatusStylesProps
+  healthy: StatusStylesProps
 }
 
 export const Container = styled.View`
@@ -53,6 +53,6 @@ export const Status = styled.View<Props>`
   opacity: 0.5;
   margin-left: 12px;
 
-  background-color: ${({ theme, type }) =>
-    type === 'GOOD' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_LIGHT};
+  background-color: ${({ theme, healthy }) =>
+    healthy === true ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_LIGHT};
 `

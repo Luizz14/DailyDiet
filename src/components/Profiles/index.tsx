@@ -1,6 +1,6 @@
 import { Container, Logo, Profile } from './styles'
 
-import logo from '@assets/logo.png'
+import logo from '@assets/Logo.png'
 
 export function Profiles() {
   return (

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 
 import { Container, Content, InfoContent, Title } from './styles'
 
-import { PercentDiet } from '@components/PercentDiet'
 import { DataInfo } from '@components/DataInfo'
 
 export function Statistics() {
@@ -11,7 +10,6 @@ export function Statistics() {
 
   return (
     <Container>
-      <PercentDiet title={'93.5'} />
       <Content>
         <Title>Estatísticas gerais</Title>
         <DataInfo
