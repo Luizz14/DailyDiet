@@ -6,17 +6,32 @@ import {
   Title,
 } from './styles'
 
+import { useNavigation, useRoute } from '@react-navigation/native'
+
 import { Button } from '@components/Button'
 
 import WomanWalking from '@assets/WomanWalking.png'
 import MenSit from '@assets/MenSit.png'
 
-export function CreateMealFeedback({ healthy }: FeedbackStyleProps) {
+type RouteParams = {
+  healthy: boolean
+}
+
+export function CreateMealFeedback() {
+  const navigation = useNavigation()
+
+  const route = useRoute()
+  const { healthy } = route.params as RouteParams
+
+  function handleGoToHome() {
+    navigation.navigate('home')
+  }
+
   return (
     <Container>
       {healthy === true ? (
         <>
-          <Title>Continue assim!</Title>
+          <Title healthy>Continue assim!</Title>
           <Subtitle>
             Você continua
             <Subtitle isBold> dentro da dieta. </Subtitle>
@@ -36,7 +51,7 @@ export function CreateMealFeedback({ healthy }: FeedbackStyleProps) {
         </>
       )}
 
-      <Button title='Ir para a página inicial' />
+      <Button title='Ir para a página inicial' onPress={handleGoToHome} />
     </Container>
   )
 }

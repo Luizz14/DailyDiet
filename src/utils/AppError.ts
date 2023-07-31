@@ -1,4 +1,4 @@
-export class Error {
+export class AppError {
   message: string
 
   constructor(message: string) {

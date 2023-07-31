@@ -4,7 +4,7 @@ import { DATE_COLECTION } from '@storage/storage.config'
 import { getAllDate } from './getAllDate'
 import { DateStorageDTO } from './DateStorageDTO'
 
-export async function createDate(date: DateStorageDTO) {
+export async function createDate(date: string) {
   const newDate = {
     title: date,
     data: [],

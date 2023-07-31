@@ -7,38 +7,73 @@ import {
   TagTitle,
   Title,
 } from './styles'
+import { useFocusEffect, useRoute } from '@react-navigation/native'
 import { useTheme } from 'styled-components/native'
+import { useCallback, useEffect, useState } from 'react'
+import { Alert } from 'react-native'
 
 import { Header } from '@components/Header'
 import { Button } from '@components/Button'
+import { getMealById } from '@storage/meal/getMealById'
 
-type Props = {
-  healthy?: Boolean
+import { AppError } from '@utils/AppError'
+import { MealStorageDTO } from '@storage/meal/MealStorageDTO'
+
+type RouteParams = {
+  id: string
 }
 
-export function ConsultMeal({ healthy = true }: Props) {
+export function ConsultMeal() {
+  const [meal, setMeal] = useState<MealStorageDTO>()
+
   const { COLORS } = useTheme()
+
+  const route = useRoute()
+  const { id } = route.params as RouteParams
+
+  async function fetchMeal() {
+    try {
+      const meal = await getMealById(id)
+
+      setMeal(meal)
+    } catch (error) {
+      if (error instanceof AppError) {
+        Alert.alert('Refeição', error.message)
+      } else {
+        Alert.alert('Refeição', 'Não foi possivel mostrar a refeição.')
+      }
+      console.log(error)
+    }
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeal()
+    }, [])
+  )
 
   return (
     <>
       <Header
         title='Refeição'
-        color={healthy ? COLORS.GREEN_LIGHT : COLORS.RED_LIGHT}
+        color={meal?.healthy ? COLORS.GREEN_LIGHT : COLORS.RED_LIGHT}
         showBackButton
       />
 
       <Content>
-        <Title>Sanduíche</Title>
+        <Title>{meal?.name}</Title>
 
-        <Subtitle>
-          Sanduíche de pão integral com atum e salada de alface e tomate
-        </Subtitle>
+        <Subtitle>{meal?.description}</Subtitle>
         <Subtitle isBold>Data e hora</Subtitle>
-        <Subtitle>12/08/2022 às 16:00</Subtitle>
+        <Subtitle>
+          {meal?.date} às {meal?.time}
+        </Subtitle>
 
         <Tag>
-          <Circle healthy={healthy as boolean} />
-          <TagTitle>{healthy ? 'dentro da dieta' : 'fora da dieta'}</TagTitle>
+          <Circle healthy={meal?.healthy} />
+          <TagTitle>
+            {meal?.healthy ? 'dentro da dieta' : 'fora da dieta'}
+          </TagTitle>
         </Tag>
 
         <Footer>

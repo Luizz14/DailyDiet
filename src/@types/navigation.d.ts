@@ -6,13 +6,15 @@ export declare global {
         percent: number
       }
       createMeal: undefined
+      createMealFeedback: {
+        healthy: boolean
+      }
       consultMeal: {
-        nameMeal: string
+        id: string
       }
       editMeal: {
         nameMeal: string
       }
-      createMealFeedback: undefined
     }
   }
 }

@@ -1,5 +1,9 @@
 import { Content, DataContent, Footer } from './styles'
 import { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { Alert } from 'react-native'
+
+import dayjs from 'dayjs'
 
 import { Label } from '@components/TextLabel'
 import { Header } from '@components/Header'
@@ -9,19 +13,41 @@ import { Button } from '@components/Button'
 
 import { createMeal } from '@storage/meal/createMeal'
 import { MealStorageDTO } from '@storage/meal/MealStorageDTO'
-import { getAllData } from '@storage/date/getAllData'
-import { getAllMeal } from '@storage/meal/getAllMeal'
+import { getMealsByDate } from '@storage/meal/getMealsByDate'
+import { AppError } from '@utils/AppError'
 
 export function CreateMeal() {
-  const [inDiet, setInDiet] = useState<boolean | undefined>(undefined)
   const [name, setName] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [date, setDate] = useState<string>(dayjs().format('DD.MM.YY'))
+  const [time, setTime] = useState<string>(dayjs().format('HH:mm'))
+  const [healthy, setHealthy] = useState<boolean>(true)
+
+  const navigation = useNavigation()
 
   async function handleCreateMeal() {
+    const newMeal: MealStorageDTO = {
+      id: String(Math.round(Math.random())),
+      name,
+      description,
+      date,
+      time,
+      healthy,
+    }
+
     try {
-      await createMeal(name, description, 'po', '23', inDiet)
-      console.log(getAllMeal('23'))
+      await createMeal(newMeal)
+
+      navigation.navigate('createMealFeedback', { healthy })
     } catch (error) {
+      if (error instanceof AppError) {
+        Alert.alert('Nova refeição', error.message)
+      } else {
+        Alert.alert(
+          'Nova refeição',
+          'Não foi possivel criar uma nova refeição.'
+        )
+      }
       console.log(error)
     }
   }
@@ -35,8 +61,18 @@ export function CreateMeal() {
         <Input labelTitle='Descrição' onChangeText={setDescription} larger />
 
         <DataContent>
-          <Input inputMode='numeric' labelTitle='Data' />
-          <Input inputMode='numeric' labelTitle='Hora' />
+          <Input
+            inputMode='numeric'
+            labelTitle='Data'
+            onChangeText={setDate}
+            value={date}
+          />
+          <Input
+            inputMode='numeric'
+            labelTitle='Hora'
+            onChangeText={setTime}
+            value={time}
+          />
         </DataContent>
 
         <Label title='Está dentro da dieta?' />
@@ -44,14 +80,14 @@ export function CreateMeal() {
           <Options
             title='Sim'
             type='GREEN'
-            isActive={inDiet}
-            onPress={() => setInDiet(true)}
+            isActive={healthy}
+            onPress={() => setHealthy(true)}
           />
           <Options
             title='Não'
             type='RED'
-            isActive={inDiet === false}
-            onPress={() => setInDiet(false)}
+            isActive={healthy === false}
+            onPress={() => setHealthy(false)}
           />
         </DataContent>
 

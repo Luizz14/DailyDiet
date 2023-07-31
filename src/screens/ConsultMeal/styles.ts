@@ -56,7 +56,7 @@ export const TagTitle = styled.Text`
 
   ${({ theme }) => css`
     color: ${theme.COLORS.GRAY_100};
-    font-size: ${theme.FONT_SIZE.BODY_S};
+    font-size: ${theme.FONT_SIZE.BODY_S}px;
   `}
 `
 

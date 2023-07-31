@@ -1,4 +1,6 @@
+import { MealStorageDTO } from '@storage/meal/MealStorageDTO'
+
 export type DateStorageDTO = {
   title: string
-  date: []
+  data: [MealStorageDTO]
 }

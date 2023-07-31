@@ -1,6 +1,10 @@
 import { SectionList } from 'react-native'
-import { useEffect, useState } from 'react'
-import { useNavigation, useRoute } from '@react-navigation/native'
+import { useCallback, useEffect, useState } from 'react'
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native'
 import { useTheme } from 'styled-components'
 
 import { Container, Content, Date, Title } from './styles'
@@ -9,7 +13,10 @@ import { Profiles } from '@components/Profiles'
 import { DataInfo } from '@components/DataInfo'
 import { Button } from '@components/Button'
 import { Meal } from '@components/Meal'
-import { StatusStylesProps } from '@components/Meal/styles'
+
+import { getAllDate } from '@storage/date/getAllDate'
+import { DateStorageDTO } from '@storage/date/DateStorageDTO'
+import { deleteAllDate } from '@storage/date/deleteAllDate'
 
 type RouteParams = {
   percent: number
@@ -17,47 +24,43 @@ type RouteParams = {
 
 export function Home() {
   const [healthy, setHealthy] = useState<boolean>()
+  const [data, setData] = useState<DateStorageDTO[]>([])
 
   const percent = 92
-
   const navigation = useNavigation()
+
   const { COLORS } = useTheme()
 
-  const DATA = [
-    {
-      title: '12.03.23',
-      data: [
-        {
-          name: 'WheyP',
-          healthy: true,
-        },
-      ],
-    },
-    {
-      title: '13.03.23',
-      data: [
-        {
-          name: 'Macarrao',
-          healthy: true,
-        },
-      ],
-    },
-  ]
+  async function fetchMeals() {
+    try {
+      const storedMeals = await getAllDate()
+
+      console.log(
+        data.forEach((x) => {
+          x.data
+        })
+      )
+      console.log(setData)
+
+      setData(storedMeals)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   function handleNewMeal() {
     navigation.navigate('createMeal')
   }
 
-  // const route = useRoute()
-  // const { percent } = route.params as RouteParams
+  function handleSelectMeal(id: string) {
+    navigation.navigate('consultMeal', { id })
+  }
 
-  // function fetchDiet() {
-  //   percent >= 80 ? setType('ABOVE') : setType('DOWN')
-  // }
-
-  // useEffect(() => {
-  //   fetchDiet()
-  // }, [percent])
+  useFocusEffect(
+    useCallback(() => {
+      fetchMeals()
+    }, [])
+  )
 
   return (
     <Container>
@@ -74,10 +77,15 @@ export function Home() {
 
         <SectionList
           style={{ marginTop: 12 }}
-          sections={DATA}
-          keyExtractor={(item, index) => item.name + index}
+          sections={data}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <Meal mealName={item.name} healthy={item.healthy} />
+            <Meal
+              mealName={item.name}
+              mealTime={item.time}
+              healthy={item.healthy}
+              onPress={() => handleSelectMeal(item.id)}
+            />
           )}
           renderSectionHeader={({ section }) => <Date>{section.title}</Date>}
           showsVerticalScrollIndicator={false}

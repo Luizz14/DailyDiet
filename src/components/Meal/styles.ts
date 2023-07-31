@@ -6,7 +6,7 @@ type Props = {
   healthy: StatusStylesProps
 }
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
 
@@ -54,5 +54,5 @@ export const Status = styled.View<Props>`
   margin-left: 12px;
 
   background-color: ${({ theme, healthy }) =>
-    healthy === true ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_LIGHT};
+    healthy === true ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
 `

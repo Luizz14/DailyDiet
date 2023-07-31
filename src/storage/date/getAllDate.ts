@@ -7,7 +7,6 @@ export async function getAllDate() {
     const storedDates = await AsyncStorage.getItem(DATE_COLECTION)
 
     const dates: DateStorageDTO[] = storedDates ? JSON.parse(storedDates) : []
-
     return dates
   } catch (error) {
     throw error

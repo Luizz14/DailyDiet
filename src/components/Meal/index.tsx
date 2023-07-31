@@ -1,3 +1,5 @@
+import { TouchableOpacityProps } from 'react-native'
+
 import {
   Container,
   DateFood,
@@ -7,15 +9,16 @@ import {
   StatusStylesProps,
 } from './styles'
 
-type Props = {
-  healthy?: StatusStylesProps
+type Props = TouchableOpacityProps & {
   mealName: string
+  mealTime: string
+  healthy?: StatusStylesProps
 }
 
-export function Meal({ healthy = true, mealName }: Props) {
+export function Meal({ healthy = true, mealName, mealTime, ...rest }: Props) {
   return (
-    <Container>
-      <DateFood>20:00</DateFood>
+    <Container {...rest}>
+      <DateFood>{mealTime}</DateFood>
       <Divider />
       <FoodName>{mealName}</FoodName>
       <Status healthy={healthy} />

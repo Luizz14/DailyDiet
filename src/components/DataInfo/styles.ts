@@ -8,7 +8,7 @@ export const Container = styled.View<PropsContainer>`
   flex: 1;
   max-height: 107px;
 
-  margin-top: 20px;
+  margin: 20px 0px;
   justify-content: center;
   padding: 0px 15px;
 

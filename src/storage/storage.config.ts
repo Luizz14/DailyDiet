@@ -1,4 +1,3 @@
-const DATE_COLECTION = '@daily-diet:date'
-const MEAL_COLECTION = '@daily-diet:meals'
+const DATE_COLECTION = '@daily-diet:data'
 
-export { DATE_COLECTION, MEAL_COLECTION }
+export { DATE_COLECTION }
