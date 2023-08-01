@@ -1,5 +1,5 @@
 import { SectionList } from 'react-native'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   useFocusEffect,
   useNavigation,
@@ -16,17 +16,13 @@ import { Meal } from '@components/Meal'
 
 import { getAllDate } from '@storage/date/getAllDate'
 import { DateStorageDTO } from '@storage/date/DateStorageDTO'
-import { deleteAllDate } from '@storage/date/deleteAllDate'
-
-type RouteParams = {
-  percent: number
-}
+import { getPercentOfTheMeals } from '@storage/meal/getPercentOfTheMeals'
+import { StatisticStorageDTO } from '@storage/meal/StatisticStorageDTO'
 
 export function Home() {
-  const [healthy, setHealthy] = useState<boolean>()
   const [data, setData] = useState<DateStorageDTO[]>([])
+  const [statistics, setStatistics] = useState<StatisticStorageDTO>(Object)
 
-  const percent = 92
   const navigation = useNavigation()
 
   const { COLORS } = useTheme()
@@ -35,17 +31,19 @@ export function Home() {
     try {
       const storedMeals = await getAllDate()
 
-      console.log(
-        data.forEach((x) => {
-          x.data
-        })
-      )
-      console.log(setData)
-
       setData(storedMeals)
     } catch (error) {
       console.log(error)
     }
+  }
+
+  async function fetchPercent() {
+    const statistics = await getPercentOfTheMeals()
+    setStatistics(statistics)
+  }
+
+  function handleGoToStatistic() {
+    navigation.navigate('statistics')
   }
 
   function handleNewMeal() {
@@ -59,6 +57,7 @@ export function Home() {
   useFocusEffect(
     useCallback(() => {
       fetchMeals()
+      fetchPercent()
     }, [])
   )
 
@@ -66,9 +65,14 @@ export function Home() {
     <Container>
       <Profiles />
       <DataInfo
-        color={healthy === true ? COLORS.GREEN_LIGHT : COLORS.RED_LIGHT}
-        title={String(percent + '%')}
+        color={
+          statistics.percentOfTheMeals >= 60
+            ? COLORS.GREEN_LIGHT
+            : COLORS.RED_LIGHT
+        }
+        title={String(statistics.percentOfTheMeals + '%')}
         subTitle='das refeições dentro da dieta'
+        onPress={handleGoToStatistic}
       />
 
       <Content>

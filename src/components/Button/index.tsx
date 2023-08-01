@@ -19,7 +19,9 @@ export function Button({
 }: Props) {
   return (
     <Container type={type} {...rest} onPress={onPress}>
-      {nameIcon !== undefined && <ButtonIcon nameIcon={nameIcon} type={type} />}
+      {nameIcon !== undefined && (
+        <ButtonIcon nameIcon={nameIcon} type={type} onPress={onPress} />
+      )}
       <Title type={type}>{title}</Title>
     </Container>
   )

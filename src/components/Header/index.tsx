@@ -1,21 +1,45 @@
-import { Container, BackIcon, Title, Content, BackButton } from './styles'
+import {
+  Container,
+  Title,
+  Content,
+  SecondTitle,
+  SecondTitleButton,
+} from './styles'
+import { ButtonIcon } from '@components/ButtonIcon'
 
 type Props = {
   title: string
-  showBackButton?: Boolean
+  showBackButton?: boolean
+  showSecondTitle?: boolean
   color?: string
+  onPressArrow?: () => void
+  onPressSecondTitle?: () => void
 }
 
-export function Header({ title, color, showBackButton = false }: Props) {
+export function Header({
+  title,
+  color,
+  showBackButton = false,
+  showSecondTitle = false,
+  onPressArrow,
+  onPressSecondTitle,
+}: Props) {
   return (
     <Container color={color}>
       <Content>
         {showBackButton && (
-          <BackButton>
-            <BackIcon />
-          </BackButton>
+          <ButtonIcon
+            nameIcon='arrow-back-ios'
+            type='SECONDARY'
+            onPress={onPressArrow}
+          />
         )}
         <Title>{title}</Title>
+        {showSecondTitle && (
+          <SecondTitleButton onPress={onPressSecondTitle}>
+            <SecondTitle>Editar</SecondTitle>
+          </SecondTitleButton>
+        )}
       </Content>
     </Container>
   )

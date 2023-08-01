@@ -4,9 +4,9 @@ export type PropsContainer = {
   color: string
 }
 
-export const Container = styled.View<PropsContainer>`
+export const Container = styled.TouchableOpacity<PropsContainer>`
   flex: 1;
-  max-height: 107px;
+  max-height: 130px;
 
   margin: 20px 0px;
   justify-content: center;
@@ -28,11 +28,11 @@ export const Title = styled.Text`
 `
 
 export const SubTitle = styled.Text`
-  margin-top: 2px;
+  margin-top: 5px;
   text-align: center;
 
   ${({ theme }) => css`
-    font-size: ${theme.FONT_SIZE.BODY_M}px;
+    font-size: ${theme.FONT_SIZE.TITLE_XS}px;
     font-weight: ${theme.FONT_FAMILY.REGULAR};
     color: ${theme.COLORS.GRAY_200};
   `}

@@ -13,7 +13,6 @@ import { Button } from '@components/Button'
 
 import { createMeal } from '@storage/meal/createMeal'
 import { MealStorageDTO } from '@storage/meal/MealStorageDTO'
-import { getMealsByDate } from '@storage/meal/getMealsByDate'
 import { AppError } from '@utils/AppError'
 
 export function CreateMeal() {
@@ -25,9 +24,13 @@ export function CreateMeal() {
 
   const navigation = useNavigation()
 
+  function handleGoBackToHome() {
+    navigation.navigate('home')
+  }
+
   async function handleCreateMeal() {
     const newMeal: MealStorageDTO = {
-      id: String(Math.round(Math.random())),
+      id: String(Math.random()),
       name,
       description,
       date,
@@ -54,7 +57,11 @@ export function CreateMeal() {
 
   return (
     <>
-      <Header title='Nova refeição' showBackButton></Header>
+      <Header
+        title='Nova refeição'
+        onPressArrow={handleGoBackToHome}
+        showBackButton
+      ></Header>
 
       <Content>
         <Input labelTitle='Nome' onChangeText={setName} />

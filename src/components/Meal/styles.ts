@@ -23,6 +23,8 @@ export const Container = styled.TouchableOpacity`
 export const FoodName = styled.Text`
   flex: 1;
 
+  align-self: center;
+
   ${({ theme }) => css`
     color: ${theme.COLORS.GRAY_200};
     font-size: ${theme.FONT_SIZE.BODY_M}px;
@@ -30,6 +32,8 @@ export const FoodName = styled.Text`
 `
 
 export const DateFood = styled.Text`
+  align-self: center;
+
   ${({ theme }) => css`
     color: ${theme.COLORS.GRAY_100};
     font-size: ${theme.FONT_SIZE.BODY_M}px;
@@ -52,6 +56,8 @@ export const Status = styled.View<Props>`
   border-radius: 14px;
   opacity: 0.5;
   margin-left: 12px;
+
+  align-self: center;
 
   background-color: ${({ theme, healthy }) =>
     healthy === true ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};

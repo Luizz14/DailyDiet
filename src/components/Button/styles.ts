@@ -13,6 +13,7 @@ export const Container = styled(TouchableOpacity)<Props>`
 
   min-height: 60px;
   max-height: 60px;
+
   margin-top: 7px;
   border-radius: 6px;
 
@@ -34,7 +35,7 @@ export const Container = styled(TouchableOpacity)<Props>`
 export const Title = styled.Text<Props>`
   ${({ theme }) => css`
     font-weight: ${theme.FONT_FAMILY.BOLD};
-    font-size: ${theme.FONT_SIZE.BODY_M}px;
+    font-size: ${theme.FONT_SIZE.TITLE_XS}px;
   `}
   color: ${({ theme, type }) =>
     type === 'PRIMARY' ? theme.COLORS.WHITE : theme.COLORS.GRAY_100};

@@ -22,13 +22,15 @@ export const Content = styled(SafeAreaView)`
   width: 100%;
   padding-bottom: 25px;
 
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `
 
 export const Title = styled.Text`
   flex: 1;
   text-align: center;
+
+  align-self: center;
+
   ${({ theme }) => css`
     font-size: ${theme.FONT_SIZE.TITLE_S}px;
     font-weight: ${theme.FONT_FAMILY.BOLD};
@@ -36,15 +38,15 @@ export const Title = styled.Text`
   `}
 `
 
-export const BackButton = styled(TouchableOpacity)`
-  flex: 1;
-  /* position: absolute; */
-
-  max-width: 40px;
+export const SecondTitleButton = styled(TouchableOpacity)`
+  align-self: center;
 `
+export const SecondTitle = styled.Text`
+  text-align: right;
 
-// Vai ser um icon de voltar
-export const BackIcon = styled(ArrowLeft).attrs(({ theme }) => ({
-  size: 32,
-  color: theme.COLORS.GRAY_200,
-}))``
+  ${({ theme }) => css`
+    font-size: ${theme.FONT_SIZE.TITLE_XS}px;
+    font-weight: ${theme.FONT_FAMILY.BOLD};
+    color: ${theme.COLORS.GREEN_DARK};
+  `}
+`

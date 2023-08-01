@@ -2,11 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { MealStorageDTO } from './MealStorageDTO'
 import { getMealsByDate } from './getMealsByDate'
-import { AppError } from '@utils/AppError'
 
-import { DateStorageDTO } from '@storage/date/DateStorageDTO'
+import { AppError } from '@utils/AppError'
 import { getAllDate } from '@storage/date/getAllDate'
-import { createDate } from '@storage/date/createDate'
 import { DATE_COLECTION } from '@storage/storage.config'
 import { getDateByTitle } from '@storage/date/getDateByTitle'
 
@@ -25,13 +23,12 @@ export async function createMeal(meal: MealStorageDTO) {
         data: [meal],
       }
 
-      console.log('Criando nova data', date)
       await AsyncStorage.setItem(
         `${DATE_COLECTION}`,
         JSON.stringify([date, ...storedDates])
       )
     } else {
-      const storage = storedDate.filter((item) => item.title !== meal.date)
+      const storage = storedDates.filter((item) => item.title !== meal.date)
 
       const storedMeals = await getMealsByDate(meal.date)
       const newStorage = {
@@ -41,7 +38,7 @@ export async function createMeal(meal: MealStorageDTO) {
 
       await AsyncStorage.setItem(
         DATE_COLECTION,
-        JSON.stringify([...storage, newStorage])
+        JSON.stringify([newStorage, ...storage])
       )
     }
   } catch (error) {

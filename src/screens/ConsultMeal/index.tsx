@@ -7,29 +7,49 @@ import {
   TagTitle,
   Title,
 } from './styles'
-import { useFocusEffect, useRoute } from '@react-navigation/native'
-import { useTheme } from 'styled-components/native'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Alert } from 'react-native'
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native'
+import { useTheme } from 'styled-components/native'
 
 import { Header } from '@components/Header'
 import { Button } from '@components/Button'
-import { getMealById } from '@storage/meal/getMealById'
 
 import { AppError } from '@utils/AppError'
+
+import { getMealById } from '@storage/meal/getMealById'
 import { MealStorageDTO } from '@storage/meal/MealStorageDTO'
+import { deleteMealById } from '@storage/meal/deleteMealById'
 
 type RouteParams = {
   id: string
 }
 
 export function ConsultMeal() {
-  const [meal, setMeal] = useState<MealStorageDTO>()
+  const [meal, setMeal] = useState<MealStorageDTO>(Object)
+
+  const navigation = useNavigation()
+  const route = useRoute()
+  const { id } = route.params as RouteParams
 
   const { COLORS } = useTheme()
 
-  const route = useRoute()
-  const { id } = route.params as RouteParams
+  function handleGoBackToHome() {
+    navigation.navigate('home')
+  }
+
+  function handleGoToEditMeal() {
+    navigation.navigate('editMeal', { id })
+  }
+
+  async function handleRemoveMeal(id: string) {
+    await deleteMealById(id)
+    navigation.navigate('home')
+  }
 
   async function fetchMeal() {
     try {
@@ -56,33 +76,37 @@ export function ConsultMeal() {
     <>
       <Header
         title='Refeição'
-        color={meal?.healthy ? COLORS.GREEN_LIGHT : COLORS.RED_LIGHT}
+        color={meal.healthy ? COLORS.GREEN_LIGHT : COLORS.RED_LIGHT}
         showBackButton
+        showSecondTitle
+        onPressArrow={handleGoBackToHome}
+        onPressSecondTitle={handleGoToEditMeal}
       />
 
       <Content>
-        <Title>{meal?.name}</Title>
+        <Title>{meal.name}</Title>
 
-        <Subtitle>{meal?.description}</Subtitle>
+        <Subtitle>{meal.description}</Subtitle>
         <Subtitle isBold>Data e hora</Subtitle>
         <Subtitle>
-          {meal?.date} às {meal?.time}
+          {meal.date} às {meal.time}
         </Subtitle>
 
         <Tag>
-          <Circle healthy={meal?.healthy} />
+          <Circle healthy={meal.healthy} />
           <TagTitle>
-            {meal?.healthy ? 'dentro da dieta' : 'fora da dieta'}
+            {meal.healthy ? 'dentro da dieta' : 'fora da dieta'}
           </TagTitle>
         </Tag>
 
         <Footer>
-          <Button title='Editar refeição' nameIcon='edit'></Button>
+          {/* <Button title='Editar refeição' nameIcon='edit' /> */}
           <Button
             title='Excluir refeição'
             type='SECONDARY'
             nameIcon='delete-outline'
-          ></Button>
+            onPress={() => handleRemoveMeal(meal.id)}
+          />
         </Footer>
       </Content>
     </>
