@@ -11,13 +11,13 @@ export const Container = styled.View<Props>`
   width: 100%;
   margin: 12px 0px;
 
-  ${({ theme, larger }) => css`
+  ${({ larger }) => css`
     min-height: ${larger ? '140px' : '85px'};
     max-height: ${larger ? '140px' : '85px'};
   `}
 `
 
-export const InputContent = styled(TextInput)`
+export const InputContent = styled(TextInput)<Props>`
   flex: 1;
 
   min-height: 56px;
@@ -25,12 +25,15 @@ export const InputContent = styled(TextInput)`
 
   border-radius: 6px;
   margin-bottom: 12px;
-  padding: 16px;
+  padding: 15px;
 
-  ${({ theme }) => css`
+  ${({ theme, larger }) => css`
     border: 1px ${theme.COLORS.GRAY_500};
     color: ${theme.COLORS.GRAY_100};
 
-    font-size: ${theme.FONT_SIZE.BODY_M}px;
+    font-size: ${theme.FONT_SIZE.TITLE_XS}px;
+
+    /* min-height: ${larger ? '140px' : '85px'};
+    max-height: ${larger ? '140px' : '85px'}; */
   `}
 `

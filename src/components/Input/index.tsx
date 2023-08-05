@@ -17,7 +17,11 @@ export function Input({ labelTitle, larger = false, ...rest }: Props) {
   return (
     <Container larger={larger}>
       {labelTitle !== undefined && <Label title={labelTitle} />}
-      <InputContent placeholderTextColor={COLORS.GRAY_300} {...rest} />
+      <InputContent
+        placeholderTextColor={COLORS.GRAY_300}
+        {...rest}
+        larger={larger}
+      />
     </Container>
   )
 }
